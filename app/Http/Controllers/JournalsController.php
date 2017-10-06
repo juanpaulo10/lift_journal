@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use App\Journal;
 use App\Exercise;
 use App\Body_part;
+use App\Http\Requests\JournalForm;
+
 use Illuminate\Http\Request;
 
 class JournalsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+        //->except(['index', 'show']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -32,43 +40,11 @@ class JournalsController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(JournalForm $oJournalRequest)
     {
-        $aRules = [
-            'title' => 'required|min:2',
-            'notes' => 'required|min:2'
-        ];
-        
-        foreach( $request['workouts'] as $iWorkout => $aWorkout ){
-            $aRules["workouts.{$iWorkout}.selectedExercise"] = 'required|numeric';
-            $aRules["workouts.{$iWorkout}.sets"] = 'required|numeric';
-            $aRules["workouts.{$iWorkout}.reps"] = 'required|numeric';
-            $aRules["workouts.{$iWorkout}.weight"] = 'required|numeric';
-        }
-        
-        $this->validate( $request, $aRules );
-        
-        //create the journal and assign to a var
-        $oJournal = auth()->user()->publish(
-            new Journal( request(['title', 'notes']) )
-        );
-        
-        foreach( $request['workouts'] as $iWorkout => $aWorkout ){
-            //find the exercise.
-            
-            $oTempExercise = Exercise::findOrFail( $request["workouts"][$iWorkout]["selectedExercise"] );
-
-            //attach the exercise to the journal  
-            //$user->roles()->attach($roleId, ['expires' => $expires]);
-            $oJournal->exercises()->attach($oTempExercise, [
-                'sets' => $request[ "workouts" ][ $iWorkout ][ "sets" ],
-                'reps' => $request[ "workouts" ][ $iWorkout ][ "reps" ],
-                'weight' => $request[ "workouts" ][ $iWorkout ][ "weight" ]
-            ]);
-        }
+        $oJournalRequest->persist();
 
         return ['message' => 'Journal Published!'];
     }

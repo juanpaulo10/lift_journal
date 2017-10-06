@@ -17,7 +17,7 @@ body {
 }
 
 .exercise-item {
-  padding: 12px 12px 0 12px;
+  padding: 12px 12px 0 6px;
 }
 
 .exercise-item > .input {

@@ -1,6 +1,7 @@
 <script>
-    export default {
+    import Helper from '../Helper';
 
+    export default Helper.extend({
         data() {
             return {
                 form: new Form({
@@ -19,10 +20,12 @@
                         }
                     ]
                 }),
+
                 urls: {
                     exercises: '/api/exercises',
                     bodyparts: '/api/bodyparts'
                 },
+
                 oCacheWorkout: {}
             }
         },
@@ -36,6 +39,7 @@
                             this.form.reset( this.resetWorkout );
                             console.log('create journal success');
                             console.log(response);
+                            this.$emit('create-success', response.data.message);
                         })
                         .catch( (error) => {
                             console.log('fail journal');
@@ -92,7 +96,7 @@
                         this.form.workouts[0].selectedPart = data[0].id;
                         
                         //needs to be returned to have another request
-                        return this.postRequest(this.urls.exercises, {selectedExercise: this.form.workouts[0].selectedPart});
+                        return this.postRequest(this.urls.exercises, {selectedPart: this.form.workouts[0].selectedPart});
                     })
                     .then( ({data}) => {
                         //from api/exercises, put data into exercises
@@ -104,14 +108,8 @@
             }
         },
 
-        filters: {
-            ucfirst(value){
-                return `${value[0].toUpperCase() + value.slice(1)}`;
-            }
-        },
-
         created(){
             this.cacheWorkout();
         }
-    }
+    });
 </script>

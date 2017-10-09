@@ -21,9 +21,6 @@ Route::post('/create', 'JournalsController@store');
 
 
 //api
-Route::post('/api/bodyparts', function(){
-    return \App\Body_part::all()->toArray();
-});
-Route::post('/api/exercises', function(){
-    return App\Exercise::where('bodypart_id', request(['selectedExercise']) )->get()->toArray();
-});
+Route::post('/api/feed', 'JournalsController@show');
+Route::post('/api/bodyparts', 'JournalsController@bodyparts');
+Route::post('/api/exercises', 'JournalsController@exercises');

@@ -28,3 +28,53 @@ body {
   max-width: 150px;
 }
 
+#flash-msg {
+  position: fixed;
+  z-index: 10;
+  bottom: 10px;
+  right: 20px;
+  padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+  -webkit-animation: flash-msg 5s linear forwards;
+          animation: flash-msg 5s linear forwards;
+}
+
+@-webkit-keyframes flash-msg {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+@keyframes flash-msg {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.is-feed {
+  background: #f6f6f6;
+}
+
+.user-and-time {
+  cursor: default;
+}
+
+.exercise-journal {
+  text-align: center;
+  margin-bottom: 0rem;
+  font-size: 1.6em;
+}
+
+.exercise-journal-list {
+  margin-bottom: 20px;
+}
+

@@ -1,3 +1,4 @@
+import Vue from 'vue';
 /**
  * Logs Class
  */
@@ -33,10 +34,19 @@ class Logs
     }
 
     clear( field = null ) {
-        if( field === null )
+        if( field === null ){
             this.logs.errors = {};
-        if( this.hasErrorProp() )
+        }
+        
+        if( this.hasErrorProp() ){
             delete this.logs.errors[ field ];
+        }
+        
+        //I have a child component under Create.vue which has prop of Logs.
+        //However it does not trigger the this.any() since it's not the scope of parent component (not sure why)
+        Vue.nextTick(() => {
+            this.any();
+        });
     }
 
     any() {

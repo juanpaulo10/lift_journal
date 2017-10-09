@@ -57,7 +57,7 @@ class JournalsController extends Controller
      */
     public function show(Journal $journal)
     {
-        //
+        return Journal::userJournals();
     }
 
     /**
@@ -92,5 +92,15 @@ class JournalsController extends Controller
     public function destroy(Journal $journal)
     {
         //
+    }
+
+    public function bodyparts()
+    {
+        return Body_part::all()->toArray();
+    }
+
+    public function exercises()
+    {
+        return Exercise::where('body_part_id', request(['selectedPart']) )->get()->toArray();
     }
 }

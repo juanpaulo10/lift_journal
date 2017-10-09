@@ -16,7 +16,7 @@ class CreateExercisesTable extends Migration
         Schema::create('exercises', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('bodypart_id');
+            $table->integer('body_part_id');
         });
 
         //should be alphabetical order, "E" first before "J"

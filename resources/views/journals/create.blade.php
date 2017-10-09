@@ -1,4 +1,4 @@
-<create inline-template v-cloak>
+<create inline-template v-cloak @create-success="showSuccess">
 
     <form class="container-fluid" @submit.prevent="createJournal" @keydown="form.logs.clear($event.target.name)">
         {{ csrf_field() }}

@@ -1,6 +1,5 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 html, body {
     background-color: #fff;
     // color: #636b6f;
@@ -14,7 +13,7 @@ html, body {
     margin-bottom: 30px;
 }
 
-.go-right{
+.go-right {
     margin-left: auto;
     margin-right: 0;
 }
@@ -23,10 +22,46 @@ html, body {
     padding: 12px 12px 0 6px;
 }
 
-.exercise-item > .input{
+.exercise-item > .input {
     max-width: 80px;
 }
 
-.exercise-item > .select{
+.exercise-item > .select {
     max-width: 150px;
+}
+
+#flash-msg {
+    position: fixed;
+    z-index: 10;
+    bottom: 10px;
+    right: 20px;
+    padding: 1.25rem 1.5rem 1.25rem 1.5rem;
+    animation: flash-msg 5s linear forwards;
+}
+
+@keyframes flash-msg {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.is-feed {
+    background: #f6f6f6;
+}
+.user-and-time {
+    cursor: default;
+}
+
+.exercise-journal {
+    text-align: center;
+    margin-bottom: 0rem;
+    font-size: 1.6em;
+}
+
+.exercise-journal-list {
+    margin-bottom: 20px;
 }

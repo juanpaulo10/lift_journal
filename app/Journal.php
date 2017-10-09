@@ -17,6 +17,17 @@ class Journal extends Model
 
     public function exercises()
     {
-        return $this->belongsToMany(Exercise::class);
+        // $this->belongsToMany('App\Role')->withPivot('column1', 'column2');
+        
+        return $this->belongsToMany(Exercise::class)
+                    ->withPivot('weight', 'sets', 'reps');
+    }
+
+    public static function userJournals()
+    {
+        return static::with('exercises', 'exercises.bodypart')
+                    ->latest()
+                    ->where( 'user_id', auth()->user()->id )
+                    ->get();
     }
 }

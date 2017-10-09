@@ -14,11 +14,30 @@ require('./bootstrap');
  */
 import Login from './components/Login';
 import Create from './components/Create';
+import Feed from './components/Feed';
 
 new Vue({
     el: '#app',
+
     components: {
         Login,
-        Create
+        Create,
+        Feed
+    },
+
+    data : {
+        successMsg: ''
+    },
+
+    methods: {
+        showSuccess(msg) {
+            this.successMsg = '';
+            //Dom not yet updated
+            Vue.nextTick(() => {
+                // DOM updated
+                this.successMsg = msg;
+            });
+            
+        }
     }
 });

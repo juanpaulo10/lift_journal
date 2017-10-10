@@ -26616,7 +26616,7 @@ return zhTw;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(127);
-module.exports = __webpack_require__(160);
+module.exports = __webpack_require__(162);
 
 
 /***/ }),
@@ -26631,7 +26631,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Create___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Create__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Feed__ = __webpack_require__(156);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Feed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Feed__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(165);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__store__ = __webpack_require__(160);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -26662,20 +26662,9 @@ new Vue({
         Feed: __WEBPACK_IMPORTED_MODULE_2__components_Feed___default.a
     },
 
-    data: {
-        successMsg: ''
-    },
-
-    methods: {
-        showSuccess: function showSuccess(msg) {
-            var _this = this;
-
-            this.successMsg = '';
-            //Dom not yet updated
-            Vue.nextTick(function () {
-                // DOM updated
-                _this.successMsg = msg;
-            });
+    computed: {
+        message: function message() {
+            return this.$store.state.showMsg;
         }
     }
 });
@@ -26705,6 +26694,7 @@ window.axios = __WEBPACK_IMPORTED_MODULE_1_axios___default.a;
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 window.Form = __WEBPACK_IMPORTED_MODULE_2__utilities_Form__["a" /* default */];
+window.Event = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a();
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
  * all outgoing HTTP requests automatically have it attached. This is just
@@ -28225,8 +28215,8 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
                 _this.form.reset(_this.resetWorkout);
                 console.log('create journal success');
                 console.log(response);
-                _this.$emit('create-success', response.data.message);
-
+                //this.$emit('create-success', response.data.message);
+                _this.$store.commit('showMessage', response.data.message);
                 _this.$store.commit('addNewJournal', response.data.journal);
             }).catch(function (error) {
                 console.log('fail journal');
@@ -28352,16 +28342,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_moment___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_moment__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Helper__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Modal___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__Modal__);
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = (__WEBPACK_IMPORTED_MODULE_1__Helper__["a" /* default */].extend({
+    components: {
+        Modal: __WEBPACK_IMPORTED_MODULE_2__Modal___default.a
+    },
+
     data: function data() {
         return {
             urls: {
-                feed: '/api/feed',
-                journal: '/api/journal/'
+                feed: '/api/feed'
             },
             showDelete: false,
             deleteIndex: -1
@@ -28393,20 +28389,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editJournal: function editJournal(index) {
             console.log('editing ' + index);
         },
-        deleteJournal: function deleteJournal() {
-            var _this2 = this;
-
-            axios.delete(this.urls.journal + this.$store.state.journalFeed[this.deleteIndex].id, {
-                _method: "DELETE"
-            }).then(function (response) {
-                _this2.$store.commit('deleteJournal', _this2.deleteIndex);
-                _this2.resetFeed();
-                _this2.$emit('create-success', response.data.message);
-            }).catch(function (response) {
-                console.log('error feed vue');
-                console.log(response);
-            });
-        },
         showDeleteModal: function showDeleteModal(index) {
             this.showDelete = true;
             this.deleteIndex = index;
@@ -28416,10 +28398,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.deleteIndex = -1;
         },
         showActive: function showActive(index) {
-            console.log(index);
-            // console.log(this.$store.state.journalFeed[index].isActive);
-            // this.$store.state.journalFeed[index].isActive = !this.$store.state.journalFeed[index].isActive;
-            // console.log(this.$store.state.journalFeed[index].isActive);
             //this.$store.commit('name of mutation');
             this.$store.commit('journalFeedActive', index);
         }
@@ -28712,23 +28690,13 @@ webpackContext.id = 159;
 
 /***/ }),
 /* 160 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 161 */,
-/* 162 */,
-/* 163 */,
-/* 164 */,
-/* 165 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return store; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(2);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(166);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuex__ = __webpack_require__(161);
 
 
 
@@ -28736,7 +28704,8 @@ __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_1_vuex
 
 var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     state: {
-        journalFeed: []
+        journalFeed: [],
+        showMsg: 'State Here'
     },
     getters: {
         journalFeedLen: function journalFeedLen(state) {
@@ -28761,12 +28730,20 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
         },
         deleteJournal: function deleteJournal(state, index) {
             state.journalFeed.splice(index, 1);
+        },
+        showMessage: function showMessage(state, msg) {
+            state.showMsg = '';
+            //Dom not yet updated
+            __WEBPACK_IMPORTED_MODULE_0_vue___default.a.nextTick(function () {
+                // DOM updated
+                state.showMsg = msg;
+            });
         }
     }
 });
 
 /***/ }),
-/* 166 */
+/* 161 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -29674,6 +29651,184 @@ var index_esm = {
 
 /* harmony default export */ __webpack_exports__["a"] = (index_esm);
 
+
+/***/ }),
+/* 162 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 163 */,
+/* 164 */,
+/* 165 */,
+/* 166 */,
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(4)
+/* script */
+var __vue_script__ = __webpack_require__(168)
+/* template */
+var __vue_template__ = __webpack_require__(169)
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Modal.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Modal.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-03a082e6", Component.options)
+  } else {
+    hotAPI.reload("data-v-03a082e6", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 168 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['showDelete', 'deleteIndex'],
+
+    data: function data() {
+        return {
+            urls: {
+                journal: '/api/journal/'
+            }
+        };
+    },
+
+
+    methods: {
+        deleteJournal: function deleteJournal() {
+            var _this = this;
+
+            axios.delete(this.urls.journal + this.$store.state.journalFeed[this.deleteIndex].id, {
+                _method: "DELETE"
+            }).then(function (response) {
+                _this.$store.commit('deleteJournal', _this.deleteIndex);
+                _this.cancelOrDelete();
+                _this.$store.commit('showMessage', response.data.message);
+            }).catch(function (response) {
+                console.log('error feed vue');
+                console.log(response);
+            });
+        },
+        cancelOrDelete: function cancelOrDelete() {
+            this.$emit('cancel-or-delete');
+        }
+    }
+});
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "modal", class: { "is-active": _vm.showDelete } },
+    [
+      _c("div", { staticClass: "modal-background" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "modal-card" }, [
+        _vm._m(0),
+        _vm._v(" "),
+        _c(
+          "footer",
+          {
+            staticClass: "modal-card-foot",
+            staticStyle: { "justify-content": "flex-end" }
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "button is-danger",
+                on: { click: _vm.deleteJournal }
+              },
+              [_vm._v("Delete")]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "button", on: { click: _vm.cancelOrDelete } },
+              [_vm._v("Cancel")]
+            )
+          ]
+        )
+      ])
+    ]
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("header", { staticClass: "modal-card-head" }, [
+      _c("p", { staticClass: "modal-card-title" }, [
+        _vm._v("Are you sure you want to delete?")
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-03a082e6", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

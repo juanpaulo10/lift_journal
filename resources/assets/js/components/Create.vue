@@ -39,8 +39,8 @@
                             this.form.reset( this.resetWorkout );
                             console.log('create journal success');
                             console.log(response);
-                            this.$emit('create-success', response.data.message);
-                            
+                            //this.$emit('create-success', response.data.message);
+                            this.$store.commit('showMessage', response.data.message);
                             this.$store.commit('addNewJournal', response.data.journal);
                         })
                         .catch( (error) => {

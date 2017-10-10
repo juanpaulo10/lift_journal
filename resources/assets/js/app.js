@@ -28,19 +28,9 @@ new Vue({
         Feed
     },
 
-    data : {
-        successMsg: ''
-    },
-
-    methods: {
-        showSuccess(msg) {
-            this.successMsg = '';
-            //Dom not yet updated
-            Vue.nextTick(() => {
-                // DOM updated
-                this.successMsg = msg;
-            });
-            
+    computed: {
+        message() {
+            return this.$store.state.showMsg;
         }
-    }
+    },
 });

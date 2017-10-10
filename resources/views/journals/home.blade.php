@@ -10,8 +10,8 @@
             </div>
         </div>
 
-        <div id="flash-msg" v-if="successMsg" class="notification is-success" role="alert">
-            <p v-text="successMsg"></p>
+        <div id="flash-msg" v-if="message" class="notification is-success" role="alert">
+            <p v-text="message"></p>
         </div>
 
         @include ('journals.feed')

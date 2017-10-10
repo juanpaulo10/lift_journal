@@ -1,20 +1,6 @@
-<feed inline-template v-cloak @create-success="showSuccess">
+<feed inline-template v-cloak>
     <div>
-        <div class="modal" :class="{ 'is-active' : showDelete }">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Are you sure you want to delete?</p>
-                </header>
-
-                <footer class="modal-card-foot" style="justify-content: flex-end;">
-                    <button class="button is-danger" @click="deleteJournal">Delete</button>
-                    <button class="button" @click="showDelete = false">Cancel</button>
-                </footer>
-
-            </div>
-        </div>
+        <Modal :show-delete="showDelete" :delete-index="deleteIndex" @cancel-or-delete="resetFeed"></Modal>
         <div class="columns is-centered is-mobile" v-for="(journal, index) in journals">
             <div class="column is-7 m-b-30">
                 <div class="card">

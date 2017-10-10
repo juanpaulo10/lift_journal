@@ -5,7 +5,8 @@ Vue.use(Vuex);
 
 export const store = new Vuex.Store({
     state: {
-        journalFeed : []
+        journalFeed : [],
+        showMsg: 'State Here'
     },
     getters: {
         journalFeedLen(state) {
@@ -30,6 +31,15 @@ export const store = new Vuex.Store({
         },
         deleteJournal(state, index) {
             state.journalFeed.splice(index, 1);
+        },
+
+        showMessage(state, msg) {
+            state.showMsg = '';
+            //Dom not yet updated
+            Vue.nextTick(() => {
+                // DOM updated
+                state.showMsg = msg;
+            });
         }
     }
 });

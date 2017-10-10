@@ -1,13 +1,17 @@
 <script>
     import moment from 'moment';
     import Helper from '../Helper';
+    import Modal from './Modal';
 
     export default Helper.extend({
+        components: {
+            Modal
+        },
+
         data() {
             return {
                 urls: {
                     feed: '/api/feed',
-                    journal: '/api/journal/'
                 },
                 showDelete: false,
                 deleteIndex: -1
@@ -39,19 +43,6 @@
                 console.log(`editing ${index}`);
             },
 
-            deleteJournal() {                
-                axios.delete(this.urls.journal + this.$store.state.journalFeed[this.deleteIndex].id,{
-                    _method: "DELETE"
-                }).then( (response) => {
-                    this.$store.commit('deleteJournal', this.deleteIndex);
-                    this.resetFeed();
-                    this.$emit('create-success', response.data.message);
-                }).catch( (response) => {
-                    console.log('error feed vue');
-                    console.log(response);
-                });
-            },
-
             showDeleteModal(index) {
                 this.showDelete = true;
                 this.deleteIndex = index;
@@ -63,10 +54,6 @@
             },
 
             showActive(index) {
-                console.log(index);
-                // console.log(this.$store.state.journalFeed[index].isActive);
-                // this.$store.state.journalFeed[index].isActive = !this.$store.state.journalFeed[index].isActive;
-                // console.log(this.$store.state.journalFeed[index].isActive);
                 //this.$store.commit('name of mutation');
                 this.$store.commit('journalFeedActive', index);
             }

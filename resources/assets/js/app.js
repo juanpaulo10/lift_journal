@@ -15,9 +15,12 @@ require('./bootstrap');
 import Login from './components/Login';
 import Create from './components/Create';
 import Feed from './components/Feed';
+import { store } from './store';
 
 new Vue({
     el: '#app',
+
+    store,
 
     components: {
         Login,

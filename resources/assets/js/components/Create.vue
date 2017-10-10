@@ -40,6 +40,8 @@
                             console.log('create journal success');
                             console.log(response);
                             this.$emit('create-success', response.data.message);
+                            
+                            this.$store.commit('addNewJournal', response.data.journal);
                         })
                         .catch( (error) => {
                             console.log('fail journal');
@@ -74,7 +76,7 @@
                 console.log(index);
                 this.form.workouts[index].isLoading = true;
 
-                this.postRequest(this.urls.exercises, {selectedExercise: this.form.workouts[index].selectedPart})
+                this.postRequest(this.urls.exercises, {selectedPart: this.form.workouts[index].selectedPart})
                     .then( ({data}) => {
                         //put data into this.workout's "index"
                         this.form.workouts[index].exercises = data;
@@ -82,10 +84,6 @@
 
                         this.form.workouts[index].isLoading = false;
                     });
-            },
-
-            postRequest(url, data){
-                return axios.post(url, data);
             },
 
             cacheWorkout() {

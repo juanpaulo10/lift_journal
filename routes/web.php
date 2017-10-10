@@ -24,3 +24,4 @@ Route::post('/create', 'JournalsController@store');
 Route::post('/api/feed', 'JournalsController@show');
 Route::post('/api/bodyparts', 'JournalsController@bodyparts');
 Route::post('/api/exercises', 'JournalsController@exercises');
+Route::delete('/api/journal/{oJournal}', 'JournalsController@destroy');

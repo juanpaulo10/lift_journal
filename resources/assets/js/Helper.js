@@ -5,5 +5,11 @@ export default Vue.extend({
         ucfirst(value){
             return `${value[0].toUpperCase() + value.slice(1)}`;
         }
+    },
+
+    methods: {
+        postRequest(url, data){
+            return axios.post(url, data);
+        },
     }
 });

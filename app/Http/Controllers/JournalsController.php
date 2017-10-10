@@ -45,8 +45,11 @@ class JournalsController extends Controller
     public function store(JournalForm $oJournalRequest)
     {
         $oJournalRequest->persist();
-
-        return ['message' => 'Journal Published!'];
+        
+        return [
+            'journal' => Journal::userJournals()->first(),
+            'message' => 'Journal Published!'
+        ];
     }
 
     /**
@@ -57,7 +60,7 @@ class JournalsController extends Controller
      */
     public function show(Journal $journal)
     {
-        return Journal::userJournals();
+        return Journal::userJournals()->get();
     }
 
     /**
@@ -78,9 +81,9 @@ class JournalsController extends Controller
      * @param  \App\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Journal $journal)
+    public function update(Journal $journal)
     {
-        //
+        
     }
 
     /**
@@ -89,9 +92,11 @@ class JournalsController extends Controller
      * @param  \App\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Journal $journal)
+    public function destroy(Journal $oJournal)
     {
-        //
+        $oJournal->exercises()->detach();
+        $oJournal->delete();
+        return ['message' => 'Journal Deleted!'];
     }
 
     public function bodyparts()

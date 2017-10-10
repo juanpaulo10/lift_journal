@@ -27,7 +27,6 @@ class Journal extends Model
     {
         return static::with('exercises', 'exercises.bodypart')
                     ->latest()
-                    ->where( 'user_id', auth()->user()->id )
-                    ->get();
+                    ->where( 'user_id', auth()->user()->id );
     }
 }

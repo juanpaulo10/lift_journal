@@ -59,5 +59,7 @@ class JournalForm extends FormRequest
                 'weight' => $this->workouts[ $iWorkout ][ "weight" ]
             ]);
         }
+
+        return $oJournal;
     }
 }

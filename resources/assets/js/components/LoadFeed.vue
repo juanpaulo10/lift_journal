@@ -3,6 +3,7 @@
         <div class="column is-7 m-b-30"
             v-infinite-scroll="loadMore" 
             infinite-scroll-disabled="busy"
+            infinite-scroll-distance="100"
             infinite-scroll-throttle-delay="1000"
             >
 

@@ -22,7 +22,6 @@
         @include ('layouts.nav')
 
         @yield ('content')
-
     </div>
     <script src="/js/app.js"></script>
 </body>

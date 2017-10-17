@@ -16,14 +16,13 @@ Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@create']);
 
 Route::post('/login', 'SessionsController@store');
 Route::post('/logout', 'SessionsController@destroy');
-
-Route::get('/home', 'JournalsController@index');
-Route::post('/create', 'JournalsController@store');
-
+Route::get('/', ['as' => 'home', 'uses' =>'JournalsController@index']);
 
 //api
 Route::post('/api/feed', 'JournalsController@show');
 Route::post('/api/bodyparts', 'JournalsController@bodyparts');
 Route::post('/api/exercises', 'JournalsController@exercises');
+
+Route::post('/api/journal/create', 'JournalsController@store');
 Route::delete('/api/journal/{oJournal}', 'JournalsController@destroy');
 Route::patch('/api/journal/{oJournal}', 'JournalsController@update');

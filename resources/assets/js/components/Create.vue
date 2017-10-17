@@ -28,7 +28,7 @@
         methods: {
             createJournal(){
                 //submit ajax to create journal with its workouts
-                this.form.submit('post', '/create')
+                this.form.submit('post', this.urls.create)
                         .then( (response) => {
 
                             this.form.reset( this.resetWorkout );

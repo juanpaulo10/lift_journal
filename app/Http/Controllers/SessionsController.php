@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('guest')->except(['destroy']);
@@ -48,8 +49,8 @@ class SessionsController extends Controller
             return abort(401, "Please check your credentials");
         }
 
-        //Redirect to homepage
-        return ['url' => '/home'];
+        //send json to reply the homepage
+        return ['url' => '/'];
     }
 
     /**

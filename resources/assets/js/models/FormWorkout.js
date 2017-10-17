@@ -5,7 +5,8 @@ export default Helper.extend({
         return {
             urls: {
                 exercises: '/api/exercises',
-                bodyparts: '/api/bodyparts'
+                bodyparts: '/api/bodyparts',
+                create: '/api/journal/create'
             },
         }
     },

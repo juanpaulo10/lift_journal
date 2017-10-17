@@ -50,13 +50,13 @@ class Handler extends ExceptionHandler
     {
         //https://stackoverflow.com/questions/29479409/redirect-to-homepage-if-route-doesnt-exist-in-laravel-5
         if($this->isHttpException($exception) !== true)
-            return parent::render($request, $exception);
-
+        return parent::render($request, $exception);
+        
         switch ($exception->getStatusCode()) 
         {
             // not found
             case 404:
-            return redirect()->guest('login');
+            return redirect()->guest('login');//goes to App\Http\Middleware\RedirectIfAuthenticated.php first before returning.
             break;
 
             // internal error

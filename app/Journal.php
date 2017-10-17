@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Helpers;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
@@ -23,10 +25,29 @@ class Journal extends Model
                     ->withPivot('weight', 'sets', 'reps');
     }
 
-    public static function userJournals()
+    public static function userJournals( $aJournalAttr = null , $iTimesLoaded = 0 )
     {
+        $aWhere = [
+            'user_id' => auth()->user()->id
+        ];
+
+        if( is_array($aJournalAttr) === true ) {
+            foreach ($aJournalAttr as $sKey => $mVal) {
+                $aWhere[$sKey] = $mVal;
+            }
+        }
+
         return static::with('exercises', 'exercises.bodypart')
                     ->latest()
-                    ->where( 'user_id', auth()->user()->id );
+                    ->where( $aWhere )
+                    ->skip( $iTimesLoaded * Helpers::$iLimit )
+                    ->take(Helpers::$iLimit);
+    }
+
+    public static function pivotExerciseExists( $iExerciseId ) {
+        return static::whereHas('exercises', function ($oQuery) use ($iExerciseId) { 
+            $oQuery->where('exercise_id', $iExerciseId); 
+        })
+        ->exists();
     }
 }

@@ -32,8 +32,6 @@ class Form {
         for (let key in this.oOriginalData) {
             oData[key] = this[key];
         }
-        console.log('Data being passed:');
-        console.log(oData);
 
         return oData;
     }
@@ -57,7 +55,6 @@ class Form {
 
     //can also have post(sUrl) => submit('POST', sUrl))
     submit(sRequestType, sUrl, oData = null) {
-        console.log('submitting. data below:');
         console.log( this.data() );
         this.isLoading = true;
         return new Promise( (resolve, reject) => {
@@ -82,14 +79,12 @@ class Form {
     onSuccess(response) {
         //TEMPORARY, do not store your code here since it should be dynamic
         //the "this" keyword is bound NOT on Form Class (needs .bind(this))
-        console.log('onSuccess');
 
         //this.reset();
         this.isLoading = false;
     }
 
     onFail(error) {
-        console.log('onFail');
         this.logs.fetchErrors(error.response.data);
         this.isLoading = false;
     }

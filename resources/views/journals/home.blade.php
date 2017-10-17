@@ -16,6 +16,7 @@
 
         @include ('journals.feed')
 
+        @include ('journals.edit')
     </div>
 </section>
 @endsection

@@ -33,11 +33,15 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
+import VueSocketIo from 'vue-socket.io';
+import { store } from './store';
 
+Vue.use(VueSocketIo, 'http://127.0.0.1:6001', store);
 // window.Pusher = require('pusher-js');
 
 // window.Echo = new Echo({
-//     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
+//     broadcaster: 'socket.io',
+//     host: "0.0.0.0:6001",
+//     key: ''
 // });

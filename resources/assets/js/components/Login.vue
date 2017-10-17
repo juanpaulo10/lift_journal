@@ -15,8 +15,6 @@
             login() {
                 this.form.submit('post', '/login')
                     .then( response => {
-                        // console.log( '.then' );
-                        // console.log( response );
                         if(response.data.hasOwnProperty('url'))
                             window.location.href = response.data.url;
                     }).catch( error => {

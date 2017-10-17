@@ -6,6 +6,9 @@ use App\Journal;
 use App\Exercise;
 use App\Body_part;
 use App\Http\Requests\JournalForm;
+use App\Http\Requests\UpdateForm;
+
+use Redis;
 
 use Illuminate\Http\Request;
 
@@ -28,16 +31,6 @@ class JournalsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
@@ -45,11 +38,11 @@ class JournalsController extends Controller
     public function store(JournalForm $oJournalRequest)
     {
         $oJournalRequest->persist();
-        
-        return [
-            'journal' => Journal::userJournals()->first(),
-            'message' => 'Journal Published!'
-        ];
+        $oJournal = Journal::userJournals()->first();
+        $oRedis = Redis::connection();
+        //publish to redis server that a journal was created
+        $oRedis->publish('createdjournal', json_encode($oJournal));
+        return ['message' => 'Journal Published!'];
     }
 
     /**
@@ -60,18 +53,12 @@ class JournalsController extends Controller
      */
     public function show(Journal $journal)
     {
-        return Journal::userJournals()->get();
-    }
+        //validate
+        $this->validate(request(), [
+            'iTimesLoaded' => 'required|numeric',
+        ]);
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Journal $journal)
-    {
-        //
+        return Journal::userJournals( null, request('iTimesLoaded') )->get();
     }
 
     /**
@@ -81,9 +68,20 @@ class JournalsController extends Controller
      * @param  \App\Journal  $journal
      * @return \Illuminate\Http\Response
      */
-    public function update(Journal $journal)
+    public function update(Journal $oJournal, UpdateForm $oUpdateForm)
     {
+        $oUpdateForm->persist($oJournal);
         
+        //event fire with the journal to be sent to channel
+        $oJournal = Journal::userJournals( ['id' => $oJournal->id] )->first();
+        $oRedis = Redis::connection();
+        //publish to redis server that a journal was updated
+        $oRedis->publish('updatedjournal', json_encode($oJournal));
+        //event( new Updated($oJournal) );
+
+        return [
+            'message' => 'Journal Updated!'
+        ];
     }
 
     /**
@@ -94,8 +92,14 @@ class JournalsController extends Controller
      */
     public function destroy(Journal $oJournal)
     {
+        $aId = ['id' => $oJournal->id];
+        //publish to redis server that a journal was updated
         $oJournal->exercises()->detach();
         $oJournal->delete();
+
+        $oRedis = Redis::connection();
+        $oRedis->publish('deletedjournal', json_encode($aId));
+        
         return ['message' => 'Journal Deleted!'];
     }
 
@@ -106,6 +110,8 @@ class JournalsController extends Controller
 
     public function exercises()
     {
-        return Exercise::where('body_part_id', request(['selectedPart']) )->get()->toArray();
+        return Exercise::where('body_part_id', request(['selectedPart']) )
+                ->get()
+                ->toArray();
     }
 }

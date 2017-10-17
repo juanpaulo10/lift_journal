@@ -1,4 +1,5 @@
 <?php
+use App\Events\Created;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,3 +26,4 @@ Route::post('/api/feed', 'JournalsController@show');
 Route::post('/api/bodyparts', 'JournalsController@bodyparts');
 Route::post('/api/exercises', 'JournalsController@exercises');
 Route::delete('/api/journal/{oJournal}', 'JournalsController@destroy');
+Route::patch('/api/journal/{oJournal}', 'JournalsController@update');

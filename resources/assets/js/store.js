@@ -1,38 +1,30 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import Journals from './vxmodules/journals';
 
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-    state: {
-        journalFeed : [],
-        showMsg: 'State Here'
+    modules: {
+        Journals,
     },
+
+    state: {
+        showMsg: '',
+        showEdit: false,
+        toEditIndex: -1,
+    },
+
     getters: {
-        journalFeedLen(state) {
-            return state.journalFeed.length;
+        showEdit(state) {
+            return state.showEdit;
+        },
+        toEditIndex(state) {
+            return state.toEditIndex;
         }
     },
-    mutations: {
-        assignJournalFeed(state, data) {
-            state.journalFeed = data;
-        },
-        addActive(state) {
-            state.journalFeed.forEach( (currentJournal, index) => {
-                Vue.set(state.journalFeed[index], 'isActive', false);
-            });
-        },
-        journalFeedActive(state, index) {
-            state.journalFeed[index].isActive = !state.journalFeed[index].isActive;
-        },
-        addNewJournal(state, journal){
-            Vue.set(journal, 'isActive', false);
-            state.journalFeed.unshift(journal);
-        },
-        deleteJournal(state, index) {
-            state.journalFeed.splice(index, 1);
-        },
 
+    mutations: {
         showMessage(state, msg) {
             state.showMsg = '';
             //Dom not yet updated
@@ -40,6 +32,19 @@ export const store = new Vuex.Store({
                 // DOM updated
                 state.showMsg = msg;
             });
-        }
+        },
+
+        showEdit(state, iToEdit){
+            state.showEdit = true;
+            state.toEditIndex = iToEdit;
+            //emits event to let listeners know a journal is to be edited.
+            //Edit.vue created()
+            Event.$emit('edit');
+        },
+
+        closeEditModal(state) {
+            state.showEdit = false;
+            state.toEditIndex = -1;
+        },
     }
 });

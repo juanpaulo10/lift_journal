@@ -14,6 +14,7 @@ require('./bootstrap');
  */
 import Login from './components/Login';
 import Create from './components/Create';
+import Edit from './components/Edit';
 import Feed from './components/Feed';
 import { store } from './store';
 
@@ -25,7 +26,8 @@ new Vue({
     components: {
         Login,
         Create,
-        Feed
+        Feed,
+        Edit
     },
 
     computed: {
@@ -33,4 +35,6 @@ new Vue({
             return this.$store.state.showMsg;
         }
     },
+
+    created() {}
 });

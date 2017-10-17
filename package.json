@@ -11,12 +11,18 @@
   },
   "devDependencies": {
     "axios": "^0.16.2",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "cross-env": "^5.0.1",
     "laravel-mix": "^1.0",
     "vue": "^2.1.10"
   },
   "dependencies": {
+    "express": "^4.16.2",
     "moment": "^2.18.1",
+    "redis": "^2.8.0",
+    "socket.io": "^2.0.3",
+    "vue-clickaway": "^2.1.0",
+    "vue-socket.io": "^2.1.1-a",
     "vuex": "^2.4.1"
   }
 }

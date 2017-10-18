@@ -16,6 +16,7 @@ import Login from './components/Login';
 import Create from './components/Create';
 import Edit from './components/Edit';
 import Feed from './components/Feed';
+import ProfileMenu from './components/ProfileMenu';
 import { store } from './store';
 
 new Vue({
@@ -27,7 +28,8 @@ new Vue({
         Login,
         Create,
         Feed,
-        Edit
+        Edit,
+        ProfileMenu
     },
 
     computed: {

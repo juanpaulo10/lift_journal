@@ -27771,7 +27771,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Edit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Edit__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Feed__ = __webpack_require__(164);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Feed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Feed__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__store__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__(13);
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -27792,16 +27794,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 new Vue({
     el: '#app',
 
-    store: __WEBPACK_IMPORTED_MODULE_5__store__["a" /* store */],
+    store: __WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */],
 
     components: {
         Login: __WEBPACK_IMPORTED_MODULE_1__components_Login___default.a,
         Create: __WEBPACK_IMPORTED_MODULE_2__components_Create___default.a,
         Feed: __WEBPACK_IMPORTED_MODULE_4__components_Feed___default.a,
-        Edit: __WEBPACK_IMPORTED_MODULE_3__components_Edit___default.a
+        Edit: __WEBPACK_IMPORTED_MODULE_3__components_Edit___default.a,
+        ProfileMenu: __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu___default.a
     },
 
     computed: {
@@ -27858,10 +27862,8 @@ if (token) {
 
 
 
-// import { directive as onClickOutside } from 'vue-on-click-outside' 
 
 __WEBPACK_IMPORTED_MODULE_0_vue___default.a.use(__WEBPACK_IMPORTED_MODULE_3_vue_socket_io___default.a, 'http://127.0.0.1:6001', __WEBPACK_IMPORTED_MODULE_4__store__["a" /* store */]);
-// Vue.directive('on-click-outside', onClickOutside)
 
 /***/ }),
 /* 133 */
@@ -30683,6 +30685,88 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 177 */,
+/* 178 */,
+/* 179 */,
+/* 180 */,
+/* 181 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(3)
+/* script */
+var __vue_script__ = __webpack_require__(182)
+/* template */
+var __vue_template__ = null
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\ProfileMenu.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key.substr(0, 2) !== "__"})) {console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6f72cca1", Component.options)
+  } else {
+    hotAPI.reload("data-v-6f72cca1", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 182 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_clickaway__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_clickaway___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue_clickaway__);
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    name: 'profile-menu',
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0_vue_clickaway__["mixin"]],
+
+    data: function data() {
+        return {
+            isActive: false
+        };
+    },
+
+
+    methods: {
+        toggle: function toggle() {
+            this.isActive = !this.isActive;
+        },
+        off: function off() {
+            this.isActive = false;
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

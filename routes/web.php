@@ -1,6 +1,4 @@
 <?php
-use App\Events\Created;
-
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +11,6 @@ use App\Events\Created;
 */
 
 Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@create']);
-
 Route::post('/login', 'SessionsController@store');
 Route::post('/logout', 'SessionsController@destroy');
 Route::get('/', ['as' => 'home', 'uses' =>'JournalsController@index']);
@@ -26,3 +23,9 @@ Route::post('/api/exercises', 'JournalsController@exercises');
 Route::post('/api/journal/create', 'JournalsController@store');
 Route::delete('/api/journal/{oJournal}', 'JournalsController@destroy');
 Route::patch('/api/journal/{oJournal}', 'JournalsController@update');
+
+
+//guest
+Route::get('/about', function() {
+    return view('layouts.about');
+})->middleware('guest');

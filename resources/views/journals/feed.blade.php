@@ -3,7 +3,7 @@
         <Modal :show-delete="showDelete" :delete-index="deleteIndex" @cancel-or-delete="resetFeed"></Modal>
         
         
-        <div class="columns is-centered is-mobile" v-show="newJournalsLen > 0">
+        <div class="columns is-centered is-mobile" v-show="newJournalsLen > 0" style="display: none;">
             <div class="column is-7 m-b-30">
                 <a class="button is-outlined is-primary is-medium is-fullwidth"
                 @click="addNewJournal">@{{ newJournalsLen }} New Journals</a>
@@ -15,7 +15,7 @@
                 <div class="card">
                     <header class="card-header">
                         <p class="card-header-title">
-                            @{{ journal.title }} [@{{ index }}] - @{{ journal.id }}
+                            @{{ journal.title }}
                         </p>
                         <p class="card-header-icon user-and-time">
                             <strong>{{ ucfirst( auth()->user()->name ) }}</strong>&nbsp;<small> @{{ journal.created_at | ago }} </small>

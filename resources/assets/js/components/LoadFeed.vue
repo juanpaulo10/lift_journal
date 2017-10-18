@@ -1,5 +1,5 @@
 <template>
-    <div class="columns is-centered is-mobile">
+    <div class="columns is-centered is-mobile" >
         <div class="column is-7 m-b-30"
             v-infinite-scroll="loadMore" 
             infinite-scroll-disabled="busy"

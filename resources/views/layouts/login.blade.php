@@ -9,7 +9,7 @@
 
                     <br>
 
-                    <div class="notification is-danger" v-show="hasErrCredentials">
+                    <div class="notification is-danger" v-show="hasErrCredentials" style="display: none;">
                         <p v-text="msgCredentials"></p>
                         <button class="delete" @click="hasErrCredentials = false"></button>
                     </div>

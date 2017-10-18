@@ -23,3 +23,11 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Journal::class, function (Faker $faker) {
+    return [
+        'user_id' => App\Exercise::all()->random()->id,
+        'title' => $faker->realText( $faker->numberBetween(10,30) ),
+        'notes' => $faker->sentence(6)
+    ];
+});

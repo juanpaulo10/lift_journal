@@ -61,6 +61,7 @@
             ...mapMutations([
                 //show dropdown of the currently selected journal
                 'journalFeedActive', // this.journalFeedActive(index) === this.$store.commit('journalFeedActive', index)
+                'journalFeedInactive', // this.journalFeedInactive === this.$store.commit('journalFeedInactive')
             ]),
             ...mapMutations({
                 showEditModal: 'showEdit' //map this.showEditModal(index) with this.$store.commit('showEdit', index)

@@ -37,6 +37,11 @@ export default {
             let isActive = state.journalFeed[index].isActive;
             Vue.set(state.journalFeed[index], 'isActive', !isActive);
         },
+        journalFeedInactive(state) {
+            state.journalFeed.forEach( (current, index) => {
+                Vue.set(state.journalFeed[index], 'isActive', false);
+            });
+        },
         deleteJournal(state, journal) {
             let iIndex = state.journalFeed.findIndex( (currentJournal) => journal.id === currentJournal.id );
             state.journalFeed.splice(iIndex, 1);

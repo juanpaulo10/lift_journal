@@ -30,6 +30,8 @@ if (token) {
 
 import VueSocketIo from 'vue-socket.io';
 import { store } from './store';
+// import { directive as onClickOutside } from 'vue-on-click-outside' 
 
 Vue.use(VueSocketIo, 'http://127.0.0.1:6001', store);
+// Vue.directive('on-click-outside', onClickOutside)
 

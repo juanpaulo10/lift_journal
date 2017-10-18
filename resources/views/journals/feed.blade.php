@@ -25,8 +25,9 @@
                             :key="journal.id">
 
                             <div class="dropdown-trigger">
-                                <a @click.prevent=" journalFeedActive(index) "
-                                    class="card-header-icon" 
+                                <a @click.prevent.stop=" journalFeedActive(index) "
+                                    class="card-header-icon"
+                                    v-on-clickaway="journalFeedInactive"
                                     aria-controls="dropdown-menu" 
                                     aria-haspopup="true">
                                     <span class="icon">

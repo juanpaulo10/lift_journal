@@ -21,14 +21,13 @@ This does not have testing purposes and deployment notes (to be decided).
 There will be a list of things you need on your system to start this project
 List below shows a list of prerequisites:
 
-```
-PHP 5.6 or above                - XAMPP Included
-MySQL (10.1.21-MariaDB)         - XAMPP Included
-[Composer](https://getcomposer.org/download/)   
-[Node and npm](https://nodejs.org/en/download/) make them GLOBAL for your own convenience
-[Redis](https://github.com/ServiceStack/redis-windows) for Windows.
-The version I used is Version: 3.0.503 (June 28, 2016) - I downloaded 'redis-latest.zip'
-```
+
+* PHP 5.6 or above                - XAMPP Included
+* MySQL (10.1.21-MariaDB)         - XAMPP Included
+* [Composer](https://getcomposer.org/download/)   
+* [Node and npm](https://nodejs.org/en/download/) make them GLOBAL for your own convenience
+* [Redis](https://github.com/ServiceStack/redis-windows) for Windows. The version I used is Version: 3.0.503 (June 28, 2016) - I downloaded 'redis-latest.zip'
+
 
 ### Installation
 

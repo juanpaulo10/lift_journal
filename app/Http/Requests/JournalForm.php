@@ -41,6 +41,11 @@ class JournalForm extends FormRequest
         return $aRules;
     }
 
+    /**
+     * create journal, attach the exercises included in the journal
+     *
+     * @return Journal $oJournal
+     */
     public function persist()
     {
         //create the journal and assign to a var

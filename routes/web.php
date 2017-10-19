@@ -28,4 +28,4 @@ Route::patch('/api/journal/{oJournal}', 'JournalsController@update');
 //guest
 Route::get('/about', function() {
     return view('layouts.about');
-})->middleware('guest');
+});

@@ -1,5 +1,6 @@
 @extends ('layouts.master') 
 @section ('content')
+@if( auth()->check() !== true )
 <section class="hero is-primary is-medium">
     <div class="hero-body">
         <div class="container">
@@ -12,10 +13,15 @@
         </div>
     </div>
 </section>
+@endif
 
 <section class="section">
     <div class="container">
         <div class="content">
+            @if( auth()->check() === true )
+            <h1>Lift Journal</h1>
+            <hr>
+            @endif
             <h2>
                 A Simple
                 <a href="https://laravel.com/">Laravel</a>

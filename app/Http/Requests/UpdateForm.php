@@ -42,7 +42,7 @@ class UpdateForm extends FormRequest
     }
 
     /**
-     * UPDATES EXISTING AND INSERTS PIVOT ROWS AT SAME TIME
+     * Updates existing journal and its pivot rows (sets, reps, wt)
      *
      * @param Journal $oJournal
      * @return void

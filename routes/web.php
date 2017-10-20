@@ -10,7 +10,7 @@
 |
 */
 
-Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@create']);
+Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@index']);
 Route::post('/login', 'SessionsController@store');
 Route::post('/logout', 'SessionsController@destroy');
 Route::get('/', ['as' => 'home', 'uses' =>'JournalsController@index']);

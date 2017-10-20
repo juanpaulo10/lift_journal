@@ -7,8 +7,7 @@ use App\Exercise;
 use App\Body_part;
 use App\Http\Requests\JournalForm;
 use App\Http\Requests\UpdateForm;
-
-use Redis;
+use App\Helpers;
 
 use Illuminate\Http\Request;
 
@@ -21,7 +20,7 @@ class JournalsController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * show view for home page.
      *
      * @return \Illuminate\Http\Response
      */
@@ -31,7 +30,7 @@ class JournalsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * create new journal
      *
      * @return \Illuminate\Http\Response
      */
@@ -39,14 +38,15 @@ class JournalsController extends Controller
     {
         $oJournalRequest->persist();
         $oJournal = Journal::userJournals()->first();
-        $oRedis = Redis::connection();
-        //publish to redis server that a journal was created
-        $oRedis->publish('createdjournal', json_encode($oJournal));
+
+        //publish to redis, journal is created
+        Helpers::RedisPublish( 'createdjournal', $oJournal );
+        
         return ['message' => 'Journal Published!'];
     }
 
     /**
-     * Display the specified resource.
+     * Load more journals (when scrollY is at bottom of page)
      *
      * @param  \App\Journal  $journal
      * @return \Illuminate\Http\Response
@@ -62,7 +62,7 @@ class JournalsController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the journal w/ validation, publish in redis
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Journal  $journal
@@ -74,9 +74,9 @@ class JournalsController extends Controller
         
         //event fire with the journal to be sent to channel
         $oJournal = Journal::userJournals( ['id' => $oJournal->id] )->first();
-        $oRedis = Redis::connection();
+
         //publish to redis server that a journal was updated
-        $oRedis->publish('updatedjournal', json_encode($oJournal));
+        Helpers::RedisPublish( 'updatedjournal', $oJournal );
         //event( new Updated($oJournal) );
 
         return [
@@ -85,7 +85,7 @@ class JournalsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove journal from db.
      *
      * @param  \App\Journal  $journal
      * @return \Illuminate\Http\Response
@@ -97,17 +97,28 @@ class JournalsController extends Controller
         $oJournal->exercises()->detach();
         $oJournal->delete();
 
-        $oRedis = Redis::connection();
-        $oRedis->publish('deletedjournal', json_encode($aId));
+        Helpers::RedisPublish('deletedjournal', $aId);
         
         return ['message' => 'Journal Deleted!'];
     }
 
+    /**
+     * for ajax call of body parts in the <select> tag of
+     * create/edit form
+     *
+     * @return array body_parts records
+     */
     public function bodyparts()
     {
         return Body_part::all()->toArray();
     }
 
+    /**
+     * for ajax call of exercises in the <select> tag of
+     * create/edit form
+     *
+     * @return array exercises records
+     */
     public function exercises()
     {
         return Exercise::where('body_part_id', request(['selectedPart']) )

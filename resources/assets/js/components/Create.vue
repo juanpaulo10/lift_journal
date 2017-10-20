@@ -46,7 +46,7 @@
         },
 
         created(){
-            this.cacheWorkout(); //from ../models/FormWorkout.js
+            this.cacheWorkout(); //from ../models/FormWorkout.js 
         }
     });
 </script>

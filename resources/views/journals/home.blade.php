@@ -10,7 +10,10 @@
             </div>
         </div>
 
-        <div id="flash-msg" v-if="message" class="notification is-success" role="alert" style="display: none;">
+        <div id="flash-msg" v-show="message" 
+            class="notification is-success" 
+            role="alert" 
+            style="display: none;">
             <p v-text="message"></p>
         </div>
 

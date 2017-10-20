@@ -6,34 +6,23 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
-
     public function __construct()
     {
         $this->middleware('guest')->except(['destroy']);
     }
 
     /**
-     * Display a listing of the resource.
+     * Login page
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
         return view('layouts.login');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Log in an authenticated user, else do not.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -54,41 +43,7 @@ class SessionsController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
+     * destroy current session, log out the auth user.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response

@@ -25,6 +25,15 @@ class Journal extends Model
                     ->withPivot('weight', 'sets', 'reps');
     }
 
+    /**
+     * Journals including their pivot tables
+     * can skip a number of records.
+     * has default records to take
+     * 
+     * @param [type] $aJournalAttr
+     * @param integer $iTimesLoaded
+     * @return journals with pivot table data
+     */
     public static function userJournals( $aJournalAttr = null , $iTimesLoaded = 0 )
     {
         $aWhere = [
@@ -44,6 +53,12 @@ class Journal extends Model
                     ->take(Helpers::$iLimit);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param [type] $iExerciseId
+     * @return void
+     */
     public static function pivotExerciseExists( $iExerciseId ) {
         return static::whereHas('exercises', function ($oQuery) use ($iExerciseId) { 
             $oQuery->where('exercise_id', $iExerciseId); 

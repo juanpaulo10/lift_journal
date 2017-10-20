@@ -11,22 +11,15 @@
         //functions here are from redis channels of ../server.js
         sockets: {
             createdjournal(oJournal) {
-                let oParseJournal = JSON.parse(oJournal);
-                console.log('journal is created: ', oParseJournal );
-                this.$store.commit('newArrivalJournal', oParseJournal);
+                this.$store.commit('newArrivalJournal', oJournal);
             },
 
             updatedjournal(oJournal) {
-                let oParseJournal = JSON.parse(oJournal);
-                console.log('journal is updated: ', oParseJournal );
-                this.$store.commit('updateJournal', oParseJournal);
+                this.$store.commit('updateJournal', oJournal);
             },
 
             deletedjournal(aJournalId) { //only contains id.
-                let aParseJournalId = JSON.parse(aJournalId);
-                console.log('journal is deleted: ', aParseJournalId);
-
-                this.$store.commit('deleteJournal', aParseJournalId);
+                this.$store.commit('deleteJournal', aJournalId);
             }
         },
 

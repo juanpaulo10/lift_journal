@@ -40,6 +40,7 @@
                         <div class="control">
                             <button class="button is-primary" v-bind:class="{ 'is-loading' : form.isLoading }" type="submit" :disabled="form.logs.any()" >Login</button>
                         </div>
+                        
                     </form>
                 </div>
             </div>

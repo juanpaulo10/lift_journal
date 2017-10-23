@@ -23,6 +23,9 @@
                     class="navbar-menu"
                     :class="{ 'is-active' : isActive }">
                     <div class="navbar-start">
+                        <a class="navbar-item" href=" {{ App\Helpers::isCurrPage('register') }} ">
+                            Register
+                        </a>
 
                         <a class="navbar-item" href=" {{ App\Helpers::isCurrPage('about') }} ">
                             About

@@ -50,6 +50,7 @@
                 //load the initial set of journals
                 this.ajaxFeed( { iTimesLoaded : this.iTimesLoaded } )
                     .then( (response) => {
+                        
                         this.iTimesLoaded++;
                         this.busy = false;
                         this.checkShowLoadMore();
@@ -61,7 +62,8 @@
             //determines if it shows the "load more" hint or "No more journals to load"
             checkShowLoadMore(){
                 let iFetchedLen = this.$store.getters.journalFeedLen % this.iJournalLimit;
-                if( iFetchedLen !== 0 ) {
+                //journalFeed loaded now, can check if there are journals or not.
+                if( iFetchedLen !== 0 || this.$store.getters.journalFeedLen < 1) {
                     this.showLoadMore = false;
                 }
             },

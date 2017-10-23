@@ -19,7 +19,7 @@ export default Helper.extend({
                 this.postRequest( this.urls.feed, obj )
                     .then( (response) => {
                         this.$store.commit('loadJournalFeed', response.data);
-                        this.$store.commit('addActive');
+                        // this.$store.commit('addActive');
     
                         resolve(response); //use form.submit(...).then( yourcallback )
                     }).catch( (error) => {

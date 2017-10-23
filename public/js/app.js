@@ -1939,6 +1939,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.scrollY = this.scrollYDefine();
             //load the initial set of journals
             this.ajaxFeed({ iTimesLoaded: this.iTimesLoaded }).then(function (response) {
+
                 _this.iTimesLoaded++;
                 _this.busy = false;
                 _this.checkShowLoadMore();
@@ -1951,7 +1952,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         //determines if it shows the "load more" hint or "No more journals to load"
         checkShowLoadMore: function checkShowLoadMore() {
             var iFetchedLen = this.$store.getters.journalFeedLen % this.iJournalLimit;
-            if (iFetchedLen !== 0) {
+            //journalFeed loaded now, can check if there are journals or not.
+            if (iFetchedLen !== 0 || this.$store.getters.journalFeedLen < 1) {
                 this.showLoadMore = false;
             }
         },
@@ -1983,7 +1985,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 password: ''
             }),
             hasErrCredentials: false,
-            msgCredentials: ''
+            msgCredentials: '',
+            url: {
+                login: '/login'
+            }
         };
     },
 
@@ -1992,7 +1997,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         login: function login() {
             var _this = this;
 
-            this.form.submit('post', '/login').then(function (response) {
+            this.form.submit('post', this.url.login).then(function (response) {
                 if (response.data.hasOwnProperty('url')) window.location.href = response.data.url;
             }).catch(function (error) {
                 console.log('.catch');
@@ -2102,6 +2107,52 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         off: function off() {
             this.isActive = false;
+        }
+    }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Register.vue":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                name: '',
+                email: '',
+                password: '',
+                password_confirmation: ''
+            }),
+
+            url: {
+                register: '/register'
+            },
+
+            errNotif: {
+                hasErr: false,
+                msgInfo: ''
+            }
+        };
+    },
+
+
+    methods: {
+        register: function register() {
+            var _this = this;
+
+            this.form.submit('post', this.url.register).then(function (response) {
+
+                if (response.data.hasOwnProperty('message')) _this.$store.commit('showMessage', response.data.message);
+
+                setTimeout(function () {
+                    window.location.href = response.data.url;
+                }, 2000);
+            }).catch(function (error) {});
         }
     }
 });
@@ -31073,15 +31124,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__bootstrap__ = __webpack_require__("./resources/assets/js/bootstrap.js");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login__ = __webpack_require__("./resources/assets/js/components/Login.vue");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_Login___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_Login__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Create__ = __webpack_require__("./resources/assets/js/components/Create.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Create___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Create__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Edit__ = __webpack_require__("./resources/assets/js/components/Edit.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Edit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Edit__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Feed__ = __webpack_require__("./resources/assets/js/components/Feed.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Feed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Feed__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu__ = __webpack_require__("./resources/assets/js/components/ProfileMenu.vue");
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__store__ = __webpack_require__("./resources/assets/js/store.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Register__ = __webpack_require__("./resources/assets/js/components/Register.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_Register___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_Register__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Create__ = __webpack_require__("./resources/assets/js/components/Create.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Create___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Create__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Edit__ = __webpack_require__("./resources/assets/js/components/Edit.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Edit___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Edit__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Feed__ = __webpack_require__("./resources/assets/js/components/Feed.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_Feed___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_Feed__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ProfileMenu__ = __webpack_require__("./resources/assets/js/components/ProfileMenu.vue");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_ProfileMenu___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_ProfileMenu__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__store__ = __webpack_require__("./resources/assets/js/store.js");
 
 /**
  * First we will load all of this project's JavaScript dependencies which
@@ -31103,17 +31156,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
+
 new Vue({
     el: '#app',
 
-    store: __WEBPACK_IMPORTED_MODULE_6__store__["a" /* store */],
+    store: __WEBPACK_IMPORTED_MODULE_7__store__["a" /* store */],
 
     components: {
         Login: __WEBPACK_IMPORTED_MODULE_1__components_Login___default.a,
-        Create: __WEBPACK_IMPORTED_MODULE_2__components_Create___default.a,
-        Feed: __WEBPACK_IMPORTED_MODULE_4__components_Feed___default.a,
-        Edit: __WEBPACK_IMPORTED_MODULE_3__components_Edit___default.a,
-        ProfileMenu: __WEBPACK_IMPORTED_MODULE_5__components_ProfileMenu___default.a
+        Register: __WEBPACK_IMPORTED_MODULE_2__components_Register___default.a,
+        Create: __WEBPACK_IMPORTED_MODULE_3__components_Create___default.a,
+        Feed: __WEBPACK_IMPORTED_MODULE_5__components_Feed___default.a,
+        Edit: __WEBPACK_IMPORTED_MODULE_4__components_Edit___default.a,
+        ProfileMenu: __WEBPACK_IMPORTED_MODULE_6__components_ProfileMenu___default.a
     },
 
     computed: {
@@ -31519,6 +31574,55 @@ module.exports = Component.exports
 
 /***/ }),
 
+/***/ "./resources/assets/js/components/Register.vue":
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__("./node_modules/vue-loader/lib/component-normalizer.js")
+/* script */
+var __vue_script__ = __webpack_require__("./node_modules/babel-loader/lib/index.js?{\"cacheDirectory\":true,\"presets\":[[\"env\",{\"modules\":false,\"targets\":{\"browsers\":[\"> 2%\"],\"uglify\":true}}]],\"plugins\":[\"transform-object-rest-spread\",\"transform-object-rest-spread\"]}!./node_modules/vue-loader/lib/selector.js?type=script&index=0&bustCache!./resources/assets/js/components/Register.vue")
+/* template */
+var __vue_template__ = null
+/* template functional */
+  var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources\\assets\\js\\components\\Register.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {  return key !== "default" && key.substr(0, 2) !== "__"})) {  console.error("named exports are not supported in *.vue files.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-194263fa", Component.options)
+  } else {
+    hotAPI.reload("data-v-194263fa", Component.options)
+' + '  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+
 /***/ "./resources/assets/js/models/Feed.js":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31549,7 +31653,7 @@ module.exports = Component.exports
 
                 _this.postRequest(_this.urls.feed, obj).then(function (response) {
                     _this.$store.commit('loadJournalFeed', response.data);
-                    _this.$store.commit('addActive');
+                    // this.$store.commit('addActive');
 
                     resolve(response); //use form.submit(...).then( yourcallback )
                 }).catch(function (error) {

@@ -7,13 +7,16 @@
                     password: ''
                 }),
                 hasErrCredentials: false,
-                msgCredentials: ''
+                msgCredentials: '',
+                url: {
+                    login: '/login'
+                }
             }
         },
 
         methods: {
             login() {
-                this.form.submit('post', '/login')
+                this.form.submit('post', this.url.login)
                     .then( response => {
                         if(response.data.hasOwnProperty('url'))
                             window.location.href = response.data.url;

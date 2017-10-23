@@ -13,6 +13,7 @@ import './bootstrap';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import Login from './components/Login';
+import Register from './components/Register';
 import Create from './components/Create';
 import Edit from './components/Edit';
 import Feed from './components/Feed';
@@ -26,6 +27,7 @@ new Vue({
 
     components: {
         Login,
+        Register,
         Create,
         Feed,
         Edit,

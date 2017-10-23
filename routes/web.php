@@ -10,9 +10,16 @@
 |
 */
 
-Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@index']);
+//register
+Route::get('/register', 'RegistrationsController@create');
+Route::post('/register', 'RegistrationsController@store');
+
+//login (sessions)
+Route::get('/login', ['as' => 'login', 'uses' => 'SessionsController@create']);
 Route::post('/login', 'SessionsController@store');
 Route::post('/logout', 'SessionsController@destroy');
+
+//home
 Route::get('/', ['as' => 'home', 'uses' =>'JournalsController@index']);
 
 //api

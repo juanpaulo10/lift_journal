@@ -6,7 +6,6 @@
                     email: '',
                     password: ''
                 }),
-                hasErrCredentials: false,
                 msgCredentials: '',
                 url: {
                     login: '/login'
@@ -28,7 +27,6 @@
             },
             isErrCredentials(code, data){
                 if ( code === 401 ){
-                    this.hasErrCredentials = true;
                     this.msgCredentials = data.message;
                 }
             }

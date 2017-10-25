@@ -26,7 +26,7 @@ $factory->define(App\User::class, function (Faker $faker) {
 
 $factory->define(App\Journal::class, function (Faker $faker) {
     return [
-        'user_id' => App\Exercise::all()->random()->id,
+        'user_id' => App\User::all()->random()->id,
         'title' => $faker->realText( $faker->numberBetween(10,30) ),
         'notes' => $faker->sentence(6)
     ];

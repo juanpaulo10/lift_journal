@@ -9,9 +9,10 @@
 
                     <br>
 
-                    <div class="notification is-danger" v-show="hasErrCredentials" style="display: none;">
+                    {{--  POP UP ERR MSG  --}}
+                    <div class="notification is-danger" v-show="msgCredentials.length > 0" style="display: none;">
                         <p v-text="msgCredentials"></p>
-                        <button class="delete" @click="hasErrCredentials = false"></button>
+                        <button class="delete" @click=" msgCredentials = '' "></button>
                     </div>
 
                     <form @submit.prevent="login" @keydown="form.logs.clear($event.target.name)">

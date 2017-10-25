@@ -32,6 +32,13 @@ class User extends Authenticatable
         return $this->hasMany(Journal::class);
     }
 
+    /**
+     * save a journal model from user class.
+     * (auto indicates id of user to journal record)
+     *
+     * @param Journal $oJournal
+     * @return void
+     */
     public function publish(Journal $oJournal)
     {
         return $this->journals()->save($oJournal);

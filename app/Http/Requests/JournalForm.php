@@ -55,7 +55,7 @@ class JournalForm extends FormRequest
         
         foreach( $this->workouts as $iWorkout => $aWorkout ){
             //find the exercise.
-            $oTempExercise = Exercise::findOrFail( $this->workouts[$iWorkout]["selectedExercise"] );
+            $oTempExercise = Exercise::find( $this->workouts[$iWorkout]["selectedExercise"] );
 
             //attach the exercise to the journal  
             $oJournal->exercises()->attach($oTempExercise, [

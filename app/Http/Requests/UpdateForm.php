@@ -65,7 +65,7 @@ class UpdateForm extends FormRequest
         }
 
         // dont use updateExistingPivot and attach at the same time.
-        // this updates existing pivot records and adding new at same time.
+        // 'syncWithoutDetaching' updates existing pivot records and adding new @ same time.
         $oJournal->exercises()->syncWithoutDetaching($aPivotExercises);
         $oJournal->save();
     }

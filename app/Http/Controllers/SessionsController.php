@@ -35,6 +35,7 @@ class SessionsController extends Controller
         ]);
 
         if( !auth()->attempt(request(['email', 'password'])) ){ //If not, go to login page. input error
+            //unauthorized
             return abort(401, "Please check your credentials");
         }
 

@@ -1984,7 +1984,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 email: '',
                 password: ''
             }),
-            hasErrCredentials: false,
             msgCredentials: '',
             url: {
                 login: '/login'
@@ -2007,7 +2006,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isErrCredentials: function isErrCredentials(code, data) {
             if (code === 401) {
-                this.hasErrCredentials = true;
                 this.msgCredentials = data.message;
             }
         }

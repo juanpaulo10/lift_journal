@@ -13,6 +13,7 @@ import './bootstrap';
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 import Login from './components/Login';
+import Sidebar from './components/Sidebar';
 import Register from './components/Register';
 import Create from './components/Create';
 import Edit from './components/Edit';
@@ -27,6 +28,7 @@ new Vue({
 
     components: {
         Login,
+        Sidebar,
         Register,
         Create,
         Feed,

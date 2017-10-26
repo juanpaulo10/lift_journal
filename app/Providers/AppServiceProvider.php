@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Journal;
+
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 
@@ -15,6 +17,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Schema::defaultStringLength(191);
+
+        $this->includeSidebar();
     }
 
     /**
@@ -25,5 +29,14 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    public function includeSidebar()
+    {
+        view()->composer('journals.sidebar', function ($oView) {
+            $oView->with([
+                'aMonthlyWorkouts' => Journal::monthlyWorkouts()
+            ]);
+        });
     }
 }

@@ -4,6 +4,8 @@ namespace App;
 
 use App\Helpers;
 
+use Carbon\Carbon;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
@@ -53,6 +55,46 @@ class Journal extends Model
                     ->take(Helpers::$iLimit);
     }
 
+    public function scopeFilter($sQuery, $aFilters)
+    {
+        if( array_key_exists('month', $aFilters) === true ) {
+            //'March' => 3, 'July' => 7
+            try{
+                $sQuery->whereMonth('created_at', Carbon::parse($aFilters['month'])->month);
+            }catch( \Exception $e ){
+                $sQuery->whereMonth('created_at', Carbon::now()->month);
+            }
+        }
+
+        if( array_key_exists('year', $aFilters) === true ) {
+            $sQuery->whereYear('created_at', $aFilters['year']);
+        }
+
+        return $sQuery;
+    }
+
+    /**
+     * Returns journals published per month
+     * [
+     *      year => 2017,      
+     *      month => "October",
+     *      published => 2,   
+     * ],
+     * [                  
+     *      year => 2017,      
+     *      month => "November",
+     *      published => 1,    
+     *  ],                 
+     */ 
+    public static function monthlyWorkouts()
+    {
+        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+                    ->groupBy('year','month')
+                    ->orderByRaw('min(created_at) DESC')
+                    ->get()
+                    ->toArray();
+    }
+    
     /**
      * Undocumented function
      *

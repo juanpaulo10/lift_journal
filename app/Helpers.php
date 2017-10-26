@@ -7,6 +7,14 @@ class Helpers
 {
     //limit for fetching journals
     public static $iLimit = 5;
+    public static $sIsActive = 'is-active';
+    public static $sEmptyStr = '';
+
+    private static function isFullUrl( $sPath )
+    {
+        if( request()->fullUrl() === $sPath ) return true;
+        return false;
+    }
 
     private static function isCurrPath( $sPath )
     {
@@ -41,9 +49,16 @@ class Helpers
      */
     public static function isActive( $sPath ) {
         if( self::isCurrPath($sPath) === true ) {
-            return 'is-active';
+            return self::$sIsActive;
         }
-        return '';
+        return self::$sEmptyStr;
+    }
+
+    public static function isActiveFull( $sPath ) {
+        if( self::isFullUrl($sPath) === true ) {
+            return self::$sIsActive;
+        }
+        return self::$sEmptyStr;
     }
 
     /**

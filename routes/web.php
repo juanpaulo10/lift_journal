@@ -23,6 +23,7 @@ Route::post('/logout', 'SessionsController@destroy');
 Route::get('/', ['as' => 'home', 'uses' =>'JournalsController@index']);
 
 //api
+Route::get('/filter', 'JournalsController@filter');
 Route::post('/api/feed', 'JournalsController@show');
 Route::post('/api/bodyparts', 'JournalsController@bodyparts');
 Route::post('/api/exercises', 'JournalsController@exercises');

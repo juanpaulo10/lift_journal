@@ -48,10 +48,9 @@ class JournalsController extends Controller
     /**
      * Load more journals (when scrollY is at bottom of page)
      *
-     * @param  \App\Journal  $journal
-     * @return \Illuminate\Http\Response
+     * @return Journal records
      */
-    public function show(Journal $journal)
+    public function show()
     {
         //validate
         $this->validate(request(), [
@@ -125,5 +124,16 @@ class JournalsController extends Controller
         return Exercise::where('body_part_id', request(['selectedPart']) )
                 ->get()
                 ->toArray();
+    }
+
+    public function filter()
+    {
+        $aJournals = Journal::latest()
+                    ->where('user_id', auth()->user()->id)
+                    ->filter(request(['year', 'month']))
+                    ->get()
+                    ->toArray();
+
+        return view( 'journals.filter', compact('aJournals') );
     }
 }

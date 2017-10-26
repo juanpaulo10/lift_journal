@@ -90,3 +90,14 @@ body {
   padding: 2rem 1.5rem 3rem;
 }
 
+.sidebar-label {
+  border-left: 2px #00d1b2 solid;
+  padding-left: .75em;
+}
+
+.sidebar-column {
+  position: fixed;
+  right: 2rem;
+  width: 12%;
+}
+

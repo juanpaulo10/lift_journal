@@ -54,6 +54,7 @@ class JournalTest extends TestCase
         ]);
 
         $oResponse
+            ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
@@ -102,6 +103,7 @@ class JournalTest extends TestCase
         ]);
 
         $oResponse
+            ->assertStatus(422)
             ->assertJson([
                 'message' => 'The given data was invalid.',
                 'errors' => [
@@ -152,7 +154,9 @@ class JournalTest extends TestCase
         //newly created journal
         $oJournal = Journal::first();
 
-        $oResponse->assertJson(['message' => 'Journal Published!']);
+        $oResponse
+            ->assertStatus(200)
+            ->assertJson(['message' => 'Journal Published!']);
 
         $this->assertEquals($oJournal->title, 'Shoulder into Boulder');
     }
@@ -184,6 +188,7 @@ class JournalTest extends TestCase
         $oNewJournal = Journal::find($oJournal->id);
 
         $oResponse
+        ->assertStatus(422)
         ->assertJson([
             'message' => 'The given data was invalid.',
             'errors' => [
@@ -238,6 +243,7 @@ class JournalTest extends TestCase
         $oNewJournal = Journal::find($oJournal->id);
 
         $oResponse
+        ->assertStatus(422)
         ->assertJson([
             'message' => 'The given data was invalid.',
             'errors' => [
@@ -291,7 +297,9 @@ class JournalTest extends TestCase
 
         $oNewJournal = Journal::find($oJournal->id);
 
-        $oResponse->assertJson(['message' => 'Journal Updated!']);
+        $oResponse
+        ->assertStatus(200)
+        ->assertJson(['message' => 'Journal Updated!']);
 
         $this->assertEquals($oNewJournal->title, 'Shoulder into Boulder');
     }
@@ -310,6 +318,7 @@ class JournalTest extends TestCase
         $oResponse = $this->json('DELETE', '/api/journal/' . ($oJournal->id + 1) );
 
         $oResponse
+            ->assertStatus(404)
             ->assertJsonFragment([
                 'message' => 'No query results for model [App\Journal].'
             ]);
@@ -329,6 +338,7 @@ class JournalTest extends TestCase
         $oResponse = $this->json('DELETE', '/api/journal/' . $oJournal->id);
 
         $oResponse
+            ->assertStatus(200)
             ->assertJson(['message' => 'Journal Deleted!']);
     }
 

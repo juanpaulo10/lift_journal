@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class About extends TestCase
 {
     use RefreshDatabase;
     
@@ -14,10 +14,12 @@ class ExampleTest extends TestCase
      *
      * @return void
      */
-    public function testBasicTest()
+    public function test_about_page()
     {
-        $response = $this->get('/');
+        $oResponse = $this->get('/about');
 
-        $response->assertStatus(302);
+        $oResponse
+            ->assertStatus(200)
+            ->assertSee('About');
     }
 }

@@ -110,6 +110,7 @@ class JournalsController extends Controller
      */
     public function bodyparts()
     {
+        //data here is static, can use all()
         return Body_part::all()->toArray();
     }
 

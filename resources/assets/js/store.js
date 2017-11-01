@@ -25,6 +25,7 @@ export const store = new Vuex.Store({
     },
 
     mutations: {
+        //computed property message() in app.js
         showMessage(state, msg) {
             state.showMsg = '';
             //Dom not yet updated

@@ -38,9 +38,18 @@ body {
           animation: flash-msg 5s linear forwards;
 }
 
+#flash-msg > p {
+  cursor: default;
+}
+
 @-webkit-keyframes flash-msg {
   0% {
+    display: block;
     opacity: 1;
+  }
+
+  99% {
+    opacity: 0;
   }
 
   100% {
@@ -51,7 +60,12 @@ body {
 
 @keyframes flash-msg {
   0% {
+    display: block;
     opacity: 1;
+  }
+
+  99% {
+    opacity: 0;
   }
 
   100% {

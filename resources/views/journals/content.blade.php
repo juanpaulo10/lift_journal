@@ -7,6 +7,7 @@
         <hr>
     
 @endforeach
+{{ $aJournals->links('pagination.bulma') }}
 
 
 @else

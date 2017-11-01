@@ -89,6 +89,7 @@ class Journal extends Model
     public static function monthlyWorkouts()
     {
         return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
+                    ->where('user_id', auth()->user()->id)
                     ->groupBy('year','month')
                     ->orderByRaw('min(created_at) DESC')
                     ->get()

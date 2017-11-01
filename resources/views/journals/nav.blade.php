@@ -6,7 +6,7 @@
                 <a href="{{ App\Helpers::isCurrPage('/') }}">Journals</a>
             </li>
             <li class="{{ App\Helpers::isActive('filter') }}">
-                <a href="{{ App\Helpers::isCurrPage('filter') }}">Filter</a>
+                <a href="{{ App\Helpers::isCurrPage('filter', '?month=' . \Carbon\Carbon::now()->format('F') . '&year=' . \Carbon\Carbon::now()->year ) }}">Filter</a>
             </li>
             <li class="{{ App\Helpers::isActive('about') }}">
                 <a href="{{ App\Helpers::isCurrPage('about') }}">About</a>

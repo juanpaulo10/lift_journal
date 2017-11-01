@@ -10,12 +10,12 @@ class Helpers
     public static $sIsActive = 'is-active';
     public static $sEmptyStr = '';
 
-    private static function isFullUrl( $sPath )
-    {
-        if( request()->fullUrl() === $sPath ) return true;
-        return false;
-    }
-
+    /**
+     * checks if given $sPath is the current path
+     *
+     * @param [type] $sPath
+     * @return boolean
+     */
     private static function isCurrPath( $sPath )
     {
         if( request()->path() === $sPath ) 
@@ -27,17 +27,18 @@ class Helpers
      * for <a href="#"> tags
      * check if the curr page is the requested path
      *
-     * @param [type] $sPath
+     * @param string $sPath
+     * @param string $sRequest
      * @return boolean
      */
-    public static function isCurrPage( $sPath )
+    public static function isCurrPage( $sPath, $sRequest = '' )
     {
         // request path "/" === $sPath "/posts"
         if ( self::isCurrPath($sPath) === true ) {
             return '#';
         }
         // "/" !== "/about"
-        return url( $sPath );
+        return url( $sPath ) . $sRequest;
     }
 
     /**
@@ -54,10 +55,24 @@ class Helpers
         return self::$sEmptyStr;
     }
 
-    public static function isActiveFull( $sPath ) {
-        if( self::isFullUrl($sPath) === true ) {
+    /**
+     * checks if url request param has month and year
+     * checks if the month is same with $sMonth (same with year)
+     *
+     * @param string $sMonth
+     * @param int $iYear
+     * @return 'is-active' as class for html tag
+     */
+    public static function isActiveByDate( $sMonth, $iYear ) {
+        if( request()->exists('month') !== true || request()->exists('year') !== true ) {
+            return self::$sEmptyStr;
+        }
+
+        //force iYear (int) to be (string)
+        if( request('month') === $sMonth && request('year') === (string) $iYear ){
             return self::$sIsActive;
         }
+
         return self::$sEmptyStr;
     }
 

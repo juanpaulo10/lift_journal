@@ -31855,6 +31855,7 @@ var store = new __WEBPACK_IMPORTED_MODULE_1_vuex__["a" /* default */].Store({
     },
 
     mutations: {
+        //computed property message() in app.js
         showMessage: function showMessage(state, msg) {
             state.showMsg = '';
             //Dom not yet updated

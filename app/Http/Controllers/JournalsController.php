@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Journal;
 use App\Exercise;
 use App\Body_part;
@@ -126,13 +127,24 @@ class JournalsController extends Controller
                 ->toArray();
     }
 
+    /**
+     * Shows monthly workouts of the user.
+     *
+     * @return view
+     */
     public function filter()
     {
         $aJournals = Journal::latest()
                     ->where('user_id', auth()->user()->id)
                     ->filter(request(['year', 'month']))
-                    ->get()
-                    ->toArray();
+                    ->paginate(10);
+
+        $sPath = '?month=' . Carbon::now()->format('F') . '&year=' . Carbon::now()->year;
+        if( request()->exists( ['year', 'month'] ) !== true ) {
+            $sPath = '?month=' . request('month') . '&year=' . request('year');
+        }
+
+        $aJournals->withPath( $sPath );
 
         return view( 'journals.filter', compact('aJournals') );
     }

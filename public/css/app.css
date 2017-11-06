@@ -115,3 +115,11 @@ body {
   width: 12%;
 }
 
+.filter-card {
+  border-bottom: 1px #00d1b2 solid;
+}
+
+.filter-card:last-child {
+  margin-bottom: 20px;
+}
+

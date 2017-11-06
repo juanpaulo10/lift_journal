@@ -10,7 +10,9 @@ class About extends TestCase
     use RefreshDatabase;
     
     /**
-     * A basic test example.
+     * Given I go use http get
+     * When I go to /about page
+     * Then I can see "About" text on page.
      *
      * @return void
      */

@@ -37,8 +37,8 @@ class JournalsController extends Controller
      */
     public function store(JournalForm $oJournalRequest)
     {
-        $oJournalRequest->persist();
-        $oJournal = Journal::userJournals()->first();
+        $oJournalRequest->persist(); //create the journal
+        $oJournal = Journal::userJournals()->first(); //get the latest and first journal of auth user
 
         //publish to redis, journal is created
         Helpers::RedisPublish( 'createdjournal', $oJournal );
@@ -136,16 +136,14 @@ class JournalsController extends Controller
     {
         $aJournals = Journal::latest()
                     ->where('user_id', auth()->user()->id)
-                    ->filter(request(['year', 'month']))
+                    ->filter( request(['year', 'month']) )
                     ->paginate(10);
 
-        $sPath = '?month=' . Carbon::now()->format('F') . '&year=' . Carbon::now()->year;
-        if( request()->exists( ['year', 'month'] ) !== true ) {
-            $sPath = '?month=' . request('month') . '&year=' . request('year');
-        }
+        //sPath = '?month=MONTH_NOW&year=YEAR_NOW. To be loaded in pagination nav (next, prev, etc)
+        $sPath = Helpers::checkFilterPath();
 
         $aJournals->withPath( $sPath );
-
+        
         return view( 'journals.filter', compact('aJournals') );
     }
 }

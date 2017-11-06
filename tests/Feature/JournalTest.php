@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use App\Exercise;
 use App\Journal;
+use Carbon\Carbon;
 
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -348,10 +349,19 @@ class JournalTest extends TestCase
      *
      * @return Journal $oJournal
      */
-    private function createJournalExercise()
+    private function createJournalExercise($sCreatedAt = null)
     {
+        $aNewJournal = [
+            'title' => 'This is title',
+            'notes' => 'I think I should bla'
+        ];
+        
+        if($sCreatedAt){
+            $aNewJournal[ 'created_at' ] = $sCreatedAt;
+        }
+        
         $oJournal = $this->oUser->publish(
-            new Journal( ['title' => 'This is title', 'notes' => 'I think I should bla'] )
+            new Journal( $aNewJournal )
         );
 
         //find an exercise
@@ -365,5 +375,50 @@ class JournalTest extends TestCase
         ]);
 
         return $oJournal;
+    }
+
+    /**
+     * Given I create two journals (separated by month [July, August])
+     * When I visit page without any request params
+     * Then I should see sidebar with ('Month_1 Year_1' and 'Month_2 Year_2')
+     *
+     * @return void
+     */
+    public function test_visit_filter_check_sidebar_no_params()
+    {
+        $this->createJournalExercise( Carbon::now()->subMonth()->toDateTimeString() );
+        $this->createJournalExercise( Carbon::now()->toDateTimeString() );
+        
+        $sParams = '';
+        $oResponse = $this->get('/filter' . $sParams);
+        
+        $sFirstMonth = Carbon::now()->format('F') . ' ' . Carbon::now()->format('Y');
+        $sSecondMonth = Carbon::now()->subMonth()->format('F') . ' ' . Carbon::now()->subMonth()->format('Y');
+        
+        $oResponse
+            ->assertStatus(200)
+            ->assertSee($sFirstMonth)
+            ->assertSee($sSecondMonth);
+    }
+
+    /**
+     * Given I create two journals (separated by month [July, August])
+     * When I visit page without any request params
+     * Then I should see ONE journal only for the current month.
+     *
+     * @return void
+     */
+    public function test_visit_filter_check_journals_no_params()
+    {
+        $oFirst = $this->createJournalExercise( Carbon::now()->subMonth()->toDateTimeString() );
+        $oSecond = $this->createJournalExercise( Carbon::now()->toDateTimeString() );
+        
+        $sParams = '';
+        $oResponse = $this->get('/filter' . $sParams);
+        
+        $oResponse
+            ->assertStatus(200)
+            ->assertDontSee( $oFirst->created_at->toFormattedDateString() )
+            ->assertSee( $oSecond->created_at->toFormattedDateString() );
     }
 }

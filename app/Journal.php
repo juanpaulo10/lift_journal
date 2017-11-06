@@ -10,8 +10,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Journal extends Model
 {
+    /**
+     * created_at included for testing purposes of (sidebar)
+     * @see tests/feature/JournalTest.php
+     *
+     * @var array
+     */
     protected $fillable = [
-        'title', 'notes'
+        'title', 'notes', 'created_at'
     ];
 
     public function user()
@@ -22,7 +28,7 @@ class Journal extends Model
     public function exercises()
     {
         // $this->belongsToMany('App\Role')->withPivot('column1', 'column2');
-        
+
         return $this->belongsToMany(Exercise::class)
                     ->withPivot('weight', 'sets', 'reps');
     }
@@ -31,8 +37,8 @@ class Journal extends Model
      * Journals including their pivot tables
      * can skip a number of records.
      * has default records to take
-     * 
-     * @param [type] $aJournalAttr
+     *
+     * @param array $aJournalAttr
      * @param integer $iTimesLoaded
      * @return journals with pivot table data
      */
@@ -55,19 +61,31 @@ class Journal extends Model
                     ->take(Helpers::$iLimit);
     }
 
+    /**
+     * Used for filter page.
+     * Filters journals by month and year only
+     * If there is no month and year, then it will give data for
+     * current month.
+     *
+     * @param string $sQuery
+     * @param array $aFilters keys: 'month', 'year'
+     * @return void
+     */
     public function scopeFilter($sQuery, $aFilters)
     {
-        if( array_key_exists('month', $aFilters) === true ) {
-            //'March' => 3, 'July' => 7
-            try{
-                $sQuery->whereMonth('created_at', Carbon::parse($aFilters['month'])->month);
-            }catch( \Exception $e ){
+        //'March' => 3, 'July' => 7
+        try{
+            $sQuery->whereMonth('created_at', Carbon::parse($aFilters['month'])->month);
+        }catch( \Exception $e ) {
+            if( array_key_exists('month', $aFilters) !== true ) 
                 $sQuery->whereMonth('created_at', Carbon::now()->month);
-            }
+            else $sQuery->whereMonth('created_at', '');
         }
 
-        if( array_key_exists('year', $aFilters) === true ) {
+        try{
             $sQuery->whereYear('created_at', $aFilters['year']);
+        }catch( \Exception $e) {
+            $sQuery->whereYear('created_at', Carbon::now()->year);
         }
 
         return $sQuery;
@@ -76,16 +94,16 @@ class Journal extends Model
     /**
      * Returns journals published per month
      * [
-     *      year => 2017,      
+     *      year => 2017,
      *      month => "October",
-     *      published => 2,   
+     *      published => 2,
      * ],
-     * [                  
-     *      year => 2017,      
+     * [
+     *      year => 2017,
      *      month => "November",
-     *      published => 1,    
-     *  ],                 
-     */ 
+     *      published => 1,
+     *  ],
+     */
     public static function monthlyWorkouts()
     {
         return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) published')
@@ -95,17 +113,17 @@ class Journal extends Model
                     ->get()
                     ->toArray();
     }
-    
+
     /**
      * Undocumented function
      *
      * @param [type] $iExerciseId
      * @return void
      */
-    public static function pivotExerciseExists( $iExerciseId ) {
-        return static::whereHas('exercises', function ($oQuery) use ($iExerciseId) { 
-            $oQuery->where('exercise_id', $iExerciseId); 
-        })
-        ->exists();
-    }
+    // public static function pivotExerciseExists( $iExerciseId ) {
+    //     return static::whereHas('exercises', function ($oQuery) use ($iExerciseId) {
+    //         $oQuery->where('exercise_id', $iExerciseId);
+    //     })
+    //     ->exists();
+    // }
 }

@@ -1,7 +1,9 @@
 <?php
 
 namespace App;
+
 use Redis;
+use Carbon\Carbon;
 
 class Helpers
 {
@@ -102,5 +104,19 @@ class Helpers
     public static function msgPublished()
     {
         return ['message' => 'Journal Published!'];
+    }
+
+    /**
+     * To be loaded in pagination nav (next, prev, etc)
+     * '?month=MONTH_NOW&year=YEAR_NOW. 
+     *
+     * @return void
+     */
+    public static function checkFilterPath()
+    {
+        if( request()->exists( ['year', 'month'] ) === true ) {
+            return '?month=' . request('month') . '&year=' . request('year');
+        }
+        return '?month=' . Carbon::now()->format('F') . '&year=' . Carbon::now()->year;
     }
 }

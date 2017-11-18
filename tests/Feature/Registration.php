@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\User;
+use App\Mail\Welcome;
+use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -127,6 +129,9 @@ class Registration extends TestCase
      */
     public function test_register_user()
     {
+        //prevent mail from being sent
+        Mail::fake();
+
         $oResponse = $this->json('POST', '/register', [
             'name' => 'Alibaba',
             'email' => 'jackma@example.com',
@@ -142,5 +147,34 @@ class Registration extends TestCase
                 //(notsure)auto gets whether dev or deploy url
                 'url' => url('/')
             ]);
+    }
+
+    /**
+     * Given I create a user through register (success)
+     * When I mail during register
+     * I should have successfully sent mail and mail's user id is created user id.
+     *
+     * @return void
+     */
+    public function test_mail_welcome()
+    {
+        Mail::fake();
+        
+        //register
+        $oResponse = $this->json('POST', '/register', [
+            'name' => 'Sanju',
+            'email' => 'sanju@example.com',
+            'password' => '123456',
+            'password_confirmation' => '123456'
+        ]);
+
+        $oUser = User::first();
+
+        Mail::assertSent(Welcome::class, function ($mail) use ($oUser) {
+            return $mail->oUser->id === $oUser->id &&
+                    $mail->hasTo($oUser->email);
+        });
+
+        Mail::assertSent(Welcome::class);
     }
 }

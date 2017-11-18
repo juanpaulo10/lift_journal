@@ -2149,7 +2149,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 setTimeout(function () {
                     window.location.href = response.data.url;
-                }, 2000);
+                }, 1650);
             }).catch(function (error) {});
         }
     }

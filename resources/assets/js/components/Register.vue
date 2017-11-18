@@ -30,7 +30,7 @@
 
                         setTimeout( () => {
                             window.location.href = response.data.url;
-                        }, 2000);
+                        }, 1650);
 
                     }).catch( error => {} );
             }

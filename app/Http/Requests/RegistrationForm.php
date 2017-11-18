@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\Welcome;
 use App\User;
 
 class RegistrationForm extends FormRequest
@@ -31,6 +33,13 @@ class RegistrationForm extends FormRequest
         ];
     }
 
+    /**
+     * creates a user
+     * logs in with session
+     * mails to mailtrap (in the meanwhile)
+     *
+     * @return void
+     */
     public function persist()
     {
         $oUser = User::create([
@@ -42,6 +51,7 @@ class RegistrationForm extends FormRequest
         //login the user
         auth()->login($oUser);
 
-        //mailto
+        //mailto // fetches email addr of user
+        Mail::to( $oUser )->send(new Welcome( $oUser ));
     }
 }

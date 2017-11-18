@@ -1,6 +1,6 @@
 # Lift Journal
 
-A Simple [Laravel](https://laravel.com/) `5.5` App, Made with [Bulma.io](https://bulma.io)
+A Simple [Laravel](https://laravel.com/) `5.5` App, Made with [Bulma.io](https://bulma.io) `0.5.3`
 This app is a simple diary for logging a person's workout sessions on theiy daily basis.
 
 ```
@@ -108,6 +108,16 @@ Whenever you Create a Journal,
 You should be able to get some updates from the other browser `no need to refresh page`.
 
 This also works for Edit and Delete, however, I did not create some notification, so it just happens instantly.
+
+### Testing
+
+Includes mostly unit testing:
+* Http Tests
+* Mocking (Mail Fake)
+
+Most of the tests are backend, tests in which are for inputs from `form validations` or `form request class`.
+
+Also tests email (after register success) with `mocking` (Mail Fake).
 
 ## Acknowledgments
 

@@ -143,7 +143,7 @@ class Registration extends TestCase
             ->assertStatus(200)
             ->assertJson([
                 'message' => 'Register Success!',
-                
+
                 //(notsure)auto gets whether dev or deploy url
                 'url' => url('/')
             ]);
@@ -159,7 +159,7 @@ class Registration extends TestCase
     public function test_mail_welcome()
     {
         Mail::fake();
-        
+
         //register
         $oResponse = $this->json('POST', '/register', [
             'name' => 'Sanju',

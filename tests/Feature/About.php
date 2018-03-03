@@ -3,12 +3,9 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class About extends TestCase
 {
-    use RefreshDatabase;
-    
     /**
      * Given I go use http get
      * When I go to /about page

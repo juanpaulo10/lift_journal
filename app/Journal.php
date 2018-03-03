@@ -77,7 +77,7 @@ class Journal extends Model
         try{
             $sQuery->whereMonth('created_at', Carbon::parse($aFilters['month'])->month);
         }catch( \Exception $e ) {
-            if( array_key_exists('month', $aFilters) !== true ) 
+            if( array_key_exists('month', $aFilters) !== true )
                 $sQuery->whereMonth('created_at', Carbon::now()->month);
             else $sQuery->whereMonth('created_at', '');
         }
